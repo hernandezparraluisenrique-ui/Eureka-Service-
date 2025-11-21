@@ -1,12 +1,11 @@
 FROM eclipse-temurin:17-jdk
 
-# Copia el código fuente
-COPY . /app
 WORKDIR /app
+COPY . /app
 
-# Construye el JAR
+RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
 
-# Usa el JAR generado
-ENTRYPOINT ["java", "-jar", "target/Eureka-Service-0.0.1-SNAPSHOT.jar"]
 EXPOSE 8761
+ENTRYPOINT ["java", "-jar", "target/Eureka-Service-0.0.1-SNAPSHOT.jar"]
+
