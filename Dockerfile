@@ -1,10 +1,12 @@
 FROM eclipse-temurin:17-jdk
 
-# Copia el JAR generado al contenedor
-COPY target/Eureka-Service-0.0.1-SNAPSHOT.jar app.jar
+# Copia el código fuente
+COPY . /app
+WORKDIR /app
 
-# Expón el puerto de Eureka
+# Construye el JAR
+RUN ./mvnw clean package -DskipTests
+
+# Usa el JAR generado
+ENTRYPOINT ["java", "-jar", "target/Eureka-Service-0.0.1-SNAPSHOT.jar"]
 EXPOSE 8761
-
-# Comando para ejecutar el servidor
-ENTRYPOINT ["java", "-jar", "/app.jar"]
